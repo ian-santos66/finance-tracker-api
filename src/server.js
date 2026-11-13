@@ -1,7 +1,8 @@
+import 'dotenv/config'
 import express from 'express'
 import authRouter from './routes/auth.routes.js'
 const app = express()
-const port = 5555
+const port = process.env.PORT
 
 app.use(express.json())
 app.use('/api/v1/', authRouter)

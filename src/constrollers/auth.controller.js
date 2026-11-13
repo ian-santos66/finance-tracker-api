@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
 import {addUser, getUser} from '../repository/user.repository.js'
 
 export const signUp = (req, res) => {

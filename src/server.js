@@ -1,6 +1,7 @@
 import 'dotenv/config'
 import express from 'express'
 import authRouter from './routes/auth.routes.js'
+import {connectToDatabase, query} from './database/db.js'
 
 const app = express()
 const port = process.env.PORT
@@ -11,6 +12,13 @@ app.get('/', (req, res) => {
     res.send('Hello World')
 })
 
-app.listen(port, () => {
-    console.log(`server is running on port ${port}`)
-})
+const startServer = async () => {
+    await connectToDatabase()
+
+    app.listen(port, () => {
+        console.log(`server is running on port ${port}`)
+    })
+}
+
+startServer()
+

@@ -1,8 +1,8 @@
 import {Router} from 'express'
-
+import {signUp, signIn} from '../constrollers/auth.controller.js' 
 const authRouter = Router()
 
-authRouter.post('/auth/sign-up', (req, res) => {res.status(201).json({success: true, message: 'User created succesfully'})})
-authRouter.post('/auth/sign-in', (req, res) => {res.status(201).json({success: true, message: 'User signed succesfully'})})
+authRouter.post('/auth/sign-up', signUp)
+authRouter.post('/auth/sign-in', signIn)
 
 export default authRouter

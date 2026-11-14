@@ -4,7 +4,7 @@ import authRouter from './routes/auth.routes.js'
 import {connectToDatabase, query} from './database/db.js'
 
 const app = express()
-const port = process.env.PORT
+const port = process.env.PORT || 5555
 
 app.use(express.json())
 app.use('/api/v1/', authRouter)

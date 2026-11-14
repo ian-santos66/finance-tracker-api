@@ -10,8 +10,8 @@ export const signUp = async (req, res) => {
     return res.json({success: true, message: 'User created sucessfully', data: user})
 }
 
-export const signIn = (req, res) => {
-    const {email} = req.body
-    const user = getUser(email)
+export const signIn = async (req, res) => {
+    const {email, password} = req.body
+    const user = await getUser(email)
     return res.json({success: true, message: 'User signed succesfully', data: user})
 }

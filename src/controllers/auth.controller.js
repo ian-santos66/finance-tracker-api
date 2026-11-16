@@ -1,7 +1,7 @@
 
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
-import {create, findByEmail} from '../repository/user.repository.js'
+import {create, findByEmail} from '../repositories/user.repository.js'
 
 export const signUp = async (req, res) => {
     try {

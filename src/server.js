@@ -1,6 +1,7 @@
 import 'dotenv/config'
 import express from 'express'
 import authRouter from './routes/auth.routes.js'
+import incomeRouter from './routes/income.routes.js'
 import {connectToDatabase, query} from './database/db.js'
 
 const app = express()
@@ -8,6 +9,7 @@ const port = process.env.PORT || 5555
 
 app.use(express.json())
 app.use('/api/v1/', authRouter)
+app.use('/api/v1/', incomeRouter)
 app.get('/', (req, res) => {
     res.send('Hello World')
 })

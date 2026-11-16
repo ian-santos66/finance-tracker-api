@@ -6,3 +6,10 @@ export const create = async (userId, amount, description) => {
     const {rows} =  await query(sql, values)
     return rows
 }
+
+export const findByUserId = async (userId) => {
+    const sql = 'SELECT * FROM income WHERE user_id = $1'
+    const value = [userId]
+    const {rows} = await query(sql, value)
+    return rows
+}

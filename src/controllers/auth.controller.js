@@ -6,7 +6,7 @@ import {create, findByEmail} from '../repository/user.repository.js'
 export const signUp = async (req, res) => {
     try {
         const {name, email, password} = req.body
-        const existUser = await getUser(email)
+        const existUser = await findByEmail(email)
         if (existUser.length === 0) {
            const hashPassword = await bcrypt.hash(password, 10) 
 

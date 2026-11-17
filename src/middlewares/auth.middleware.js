@@ -13,7 +13,7 @@ const authorize = async (req, res, next) => {
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET)    
 
-        const [user] = await findById(decoded.userId)
+        const user = await findById(decoded.userId)
 
         if (!user) return res.status(401).json({message: 'Unauthorized'})
         

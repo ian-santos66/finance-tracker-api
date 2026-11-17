@@ -1,9 +1,8 @@
-import {create, findByUserId} from '../repositories/incomeRepository.js'
-import {createIncome, getIncome} from '../services/income.service.js'
+import * as incomeService from '../services/incomeService.js'
 export const newIncome = async (req, res) => {
     try {
         const {amount, description} = req.body
-        const income = await createIncome(req.user.id, amount, description)
+        const income = await incomeService.createIncome(req.user.id, amount, description)
         return res.json({success: true, data: income})
     } 
     catch (error) {
@@ -14,7 +13,7 @@ export const newIncome = async (req, res) => {
 
 export const getUserIncome = async (req, res) => {
     try {
-        const income = await getIncome(req.user.id)
+        const income = await incomeService.getIncome(req.user.id)
         return res.json({success: true, data: income})
     }
     catch (error) {

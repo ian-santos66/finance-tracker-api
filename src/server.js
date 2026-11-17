@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import express from 'express'
-import authRouter from './routes/auth.routes.js'
-import incomeRouter from './routes/income.routes.js'
+import authRouter from './routes/authRoutes.js'
+import incomeRouter from './routes/incomeRoutes.js'
 import {connectToDatabase, query} from './database/db.js'
 
 const app = express()

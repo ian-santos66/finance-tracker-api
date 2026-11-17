@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import {findById} from '../repositories/user.repository.js'
+import {findById} from '../repositories/userRepository.js'
 
 const authorize = async (req, res, next) => {
     try {

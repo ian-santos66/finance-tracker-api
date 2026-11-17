@@ -1,16 +1,16 @@
 
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
-import {create, findByEmail} from '../repositories/user.repository.js'
+import * as userRepository from '../repositories/userRepository.js'
 
 export const signUp = async (req, res) => {
     try {
         const {name, email, password} = req.body
-        const existUser = await findByEmail(email)
+        const existUser = await userRepository.findByEmail(email)
         if (!existUser) {
            const hashPassword = await bcrypt.hash(password, 10) 
 
-           const user = await create(name, email, hashPassword)
+           const user = await userRepository.create(name, email, hashPassword)
            
            const token = jwt.sign({userId: user.id}, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRES_IN})
 
@@ -32,7 +32,7 @@ export const signUp = async (req, res) => {
 export const signIn = async (req, res) => {
     try {
         const {email, password} = req.body
-        const user = await findByEmail(email)
+        const user = await userRepository.findByEmail(email)
         
         if (!user) {
             const error = new Error('This user dont exists')

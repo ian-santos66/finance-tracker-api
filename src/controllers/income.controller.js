@@ -1,5 +1,5 @@
-import {create, findByUserId} from '../repositories/income.repository.js'
-import {createIncome} from '../services/income.service.js'
+import {create, findByUserId} from '../repositories/incomeRepository.js'
+import {createIncome, getIncome} from '../services/income.service.js'
 export const newIncome = async (req, res) => {
     try {
         const {amount, description} = req.body
@@ -13,6 +13,12 @@ export const newIncome = async (req, res) => {
 }
 
 export const getUserIncome = async (req, res) => {
-    const income = await findByUserId(req.user.id)
-    return res.json({success: true, data: income})
+    try {
+        const income = await getIncome(req.user.id)
+        return res.json({success: true, data: income})
+    }
+    catch (error) {
+        const status = error.statusCode || 500
+        return res.status(status).json({success: false, message: error.message})
+    }
 }

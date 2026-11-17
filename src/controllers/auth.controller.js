@@ -7,14 +7,14 @@ export const signUp = async (req, res) => {
     try {
         const {name, email, password} = req.body
         const existUser = await findByEmail(email)
-        if (existUser.length === 0) {
+        if (!existUser) {
            const hashPassword = await bcrypt.hash(password, 10) 
 
            const user = await create(name, email, hashPassword)
            
-           const token = jwt.sign({userId: user[0].id}, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRES_IN})
+           const token = jwt.sign({userId: user.id}, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRES_IN})
 
-           delete user[0].hash_password 
+           delete user.hash_password 
            
            return res.status(201).json({
                 success: true, message: 'User created sucessfully', data: user, token
@@ -34,14 +34,14 @@ export const signIn = async (req, res) => {
         const {email, password} = req.body
         const user = await findByEmail(email)
         
-        if (user.length === 0) {
+        if (!user) {
             const error = new Error('This user dont exists')
             error.statusCode = 401
             throw error
         }
 
         
-        const passwordIsValid = await bcrypt.compare(password, user[0].hash_password)
+        const passwordIsValid = await bcrypt.compare(password, user.hash_password)
         
         if (!passwordIsValid) {
             const error = new Error('Invalid credentials')
@@ -49,9 +49,9 @@ export const signIn = async (req, res) => {
             throw error
         }
         
-        const token = jwt.sign({userId: user[0].id}, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRES_IN})
+        const token = jwt.sign({userId: user.id}, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRES_IN})
 
-        delete user[0].hash_password
+        delete user.hash_password
 
         return res.status(200).json({success: true, message: 'User signed succesfully', data: user, token})
     } catch (error) {

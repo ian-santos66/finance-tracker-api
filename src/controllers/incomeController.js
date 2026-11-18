@@ -15,9 +15,20 @@ export const store = async (req, res) => {
     }
 }
 
+export const show = async (req, res) => {
+    try {
+        const income = await incomeService.getIncome(req.user.id, req.params.id)
+        return res.json({success: true, data: income})
+    } 
+    catch (error) {
+        const status = error.statusCode || 500
+        return res.status(status).json({success: false, message: error.message})
+    }
+}
+
 export const getAll = async (req, res) => {
     try {
-        const income = await incomeService.getIncome(req.user.id)
+        const income = await incomeService.listUserIncome(req.user.id)
         return res.json({success: true, data: income})
     }
     catch (error) {

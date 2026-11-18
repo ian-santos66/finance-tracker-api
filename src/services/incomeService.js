@@ -34,3 +34,29 @@ export const getIncome = async (userId) => {
 
     return userIncome
 }
+
+export const deleteIncome = async (userId, incomeId) => {
+    if (!userId || userId <= 0 || !incomeId || incomeId <= 0) {
+        const error = new Error('Invalid data: userId and incomeId must be greater than zero')
+        error.StatusCode = 400
+        throw error
+    }
+
+    let income = await incomeRepository.findById(incomeId)
+
+    if (!income) {
+        const error = new Error('There is no income with this ID')
+        error.statusCode = 404
+        throw error
+    }
+
+    if (income.user_id !== userId) {
+        const error = new Error('Unauthorized')
+        error.statuCode = 409
+        throw error
+    }
+
+    income = incomeRepository.deleteById(incomeId)
+
+    return income
+}

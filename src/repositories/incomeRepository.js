@@ -8,6 +8,14 @@ export const create = async (userId, amount, description) => {
     return rows[0] || null
 }
 
+export const findById = async (incomeId) => {
+    const sql = 'SELECT * FROM income WHERE id = $1'
+    const value = [incomeId]
+    const {rows} = await query(sql, value)
+
+    return rows[0] || null
+}
+
 export const findByUserId = async (userId) => {
     const sql = 'SELECT * FROM income WHERE user_id = $1'
     const value = [userId]
@@ -17,7 +25,7 @@ export const findByUserId = async (userId) => {
 }
 
 export const deleteById = async (incomeId) => {
-    const sql = 'DELETE FROM income WHERE id = $1'
+    const sql = 'DELETE FROM income WHERE id = $1 RETURNING *'
     const value = [incomeId]
     const {rows} = await query(sql, value)
 
